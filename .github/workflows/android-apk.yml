@@ -36,6 +36,9 @@ jobs:
       - name: Build debug APK
         run: |
           cd mobile_app
+          if [ ! -f buildozer.spec ]; then
+            buildozer init
+          fi
           buildozer android debug
 
       - name: Upload APK artifact
