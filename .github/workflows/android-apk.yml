@@ -37,7 +37,8 @@ jobs:
       - name: Build debug APK
         run: |
           cd mobile_app
-          "$(python -c \"import sysconfig; print(sysconfig.get_path('scripts'))\")/buildozer" -v android debug
+          test -f buildozer.spec
+          "$(python -c \"import sysconfig; print(sysconfig.get_path('scripts'))\")/buildozer" android debug
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
