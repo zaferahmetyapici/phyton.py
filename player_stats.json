@@ -1,0 +1,72 @@
+{
+  "TEST||PATTERNS": {
+    "name": "TEST",
+    "game": "PATTERNS",
+    "games_played": 1,
+    "total_score": 1,
+    "total_rounds": 5,
+    "best_score": 1,
+    "best_accuracy": 20.0,
+    "last_played": "2026-02-21 21:48:01"
+  },
+  "Guest||PATTERNS": {
+    "name": "Guest",
+    "game": "PATTERNS",
+    "games_played": 4,
+    "total_score": 0,
+    "total_rounds": 6,
+    "best_score": 0,
+    "best_accuracy": 0.0,
+    "last_played": "2026-02-21 21:54:53"
+  },
+  "DURU||PATTERNS": {
+    "name": "DURU",
+    "game": "PATTERNS",
+    "games_played": 1,
+    "total_score": 3,
+    "total_rounds": 3,
+    "best_score": 3,
+    "best_accuracy": 100.0,
+    "last_played": "2026-02-21 22:11:55"
+  },
+  "DURU||4 OPERATIONS": {
+    "name": "DURU",
+    "game": "4 OPERATIONS",
+    "games_played": 2,
+    "total_score": 3,
+    "total_rounds": 4,
+    "best_score": 3,
+    "best_accuracy": 100.0,
+    "last_played": "2026-02-21 22:35:21"
+  },
+  "DURU||MULTIPLICATION": {
+    "name": "DURU",
+    "game": "MULTIPLICATION",
+    "games_played": 1,
+    "total_score": 10,
+    "total_rounds": 10,
+    "best_score": 10,
+    "best_accuracy": 100.0,
+    "last_played": "2026-02-21 22:17:53"
+  },
+  "DURU||GEOMETRIC SHAPES": {
+    "name": "DURU",
+    "game": "GEOMETRIC SHAPES",
+    "games_played": 1,
+    "total_score": 13,
+    "total_rounds": 13,
+    "best_score": 13,
+    "best_accuracy": 100.0,
+    "last_played": "2026-02-21 22:20:11"
+  },
+  "Guest||4 OPERATIONS": {
+    "name": "Guest",
+    "game": "4 OPERATIONS",
+    "games_played": 1,
+    "total_score": 0,
+    "total_rounds": 2,
+    "best_score": 0,
+    "best_accuracy": 0.0,
+    "last_played": "2026-02-21 22:33:45"
+  }
+}

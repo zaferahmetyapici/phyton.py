@@ -1,0 +1,6 @@
+services:
+  phyton:
+    image: phyton
+    build:
+      context: .
+      dockerfile: ./Dockerfile
