@@ -16,27 +16,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install system dependencies
+      - name: Verify mobile files
         run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            git zip unzip openjdk-17-jdk autoconf libtool pkg-config \
-            zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev
-
-      - name: Install Buildozer
-        run: |
-          python -m pip install --upgrade pip
-          pip install Cython==0.29.36 buildozer
+          ls -la
+          ls -la mobile_app
 
       - name: Build debug APK
-        run: |
-          cd mobile_app
-          buildozer android debug
+        uses: ArtemSBulgakov/buildozer-action@v1
+        with:
+          workdir: mobile_app
+          command: buildozer -v android debug
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
