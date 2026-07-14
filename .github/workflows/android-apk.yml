@@ -32,11 +32,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install Cython==0.29.36 buildozer
+          python -m buildozer --version
 
       - name: Build debug APK
         run: |
           cd mobile_app
-          buildozer -v android debug
+          python -m buildozer -v android debug
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
