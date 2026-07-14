@@ -36,9 +36,27 @@ jobs:
 
       - name: Build debug APK
         run: |
-          cd mobile_app
-          test -f buildozer.spec
-          "$(python -c \"import sysconfig; print(sysconfig.get_path('scripts'))\")/buildozer" android debug
+          python - <<'PY'
+          import os
+          import shutil
+          import subprocess
+          import sys
+
+          os.chdir("mobile_app")
+          if not os.path.exists("buildozer.spec"):
+            raise FileNotFoundError("buildozer.spec not found in mobile_app")
+
+          buildozer_exe = shutil.which("buildozer")
+          if not buildozer_exe:
+            scripts_dir = subprocess.check_output(
+              [sys.executable, "-c", "import sysconfig; print(sysconfig.get_path('scripts'))"],
+              text=True,
+            ).strip()
+            buildozer_exe = os.path.join(scripts_dir, "buildozer")
+
+          print(f"Using buildozer executable: {buildozer_exe}")
+          subprocess.check_call([buildozer_exe, "android", "debug"])
+          PY
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
