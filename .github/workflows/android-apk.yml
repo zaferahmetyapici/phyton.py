@@ -56,7 +56,6 @@ jobs:
           ANDROID_HOME: ${{ env.ANDROID_SDK_ROOT }}
           ANDROIDSDK: ${{ env.ANDROID_SDK_ROOT }}
           ANDROID_SDK: ${{ env.ANDROID_SDK_ROOT }}
-          PATH: ${{ env.ANDROID_SDK_ROOT }}/platform-tools:${{ env.ANDROID_SDK_ROOT }}/build-tools/34.0.0:${{ env.ANDROID_SDK_ROOT }}/build-tools/33.0.2:${{ env.PATH }}
         run: |
           python - <<'PY'
           import os
@@ -79,6 +78,7 @@ jobs:
           print(f"Using buildozer executable: {buildozer_exe}")
           print(f"ANDROID_SDK_ROOT: {os.environ.get('ANDROID_SDK_ROOT')}")
           print(f"ANDROID_HOME: {os.environ.get('ANDROID_HOME')}")
+          print(f"Git path: {shutil.which('git')}")
           aidl_path = shutil.which("aidl")
           print(f"AIDL path: {aidl_path}")
           if not aidl_path:
