@@ -100,7 +100,9 @@ jobs:
           print(f"AIDL path: {aidl_path}")
           if not aidl_path:
             raise RuntimeError("aidl not found in PATH after Android SDK setup")
-          subprocess.check_call([aidl_path, "--version"])
+          aidl_result = subprocess.run([aidl_path], check=False)
+          if aidl_result.returncode not in (0, 1):
+            raise RuntimeError(f"AIDL could not execute (exit code {aidl_result.returncode})")
           subprocess.check_call([buildozer_exe, "android", "debug"])
           PY
 
