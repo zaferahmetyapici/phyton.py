@@ -10,6 +10,8 @@ orientation = portrait
 fullscreen = 0
 android.permissions = INTERNET
 android.api = 34
+android.build_tools_version = 34.0.0
+android.skip_update = True
 android.minapi = 24
 android.archs = arm64-v8a, armeabi-v7a
 

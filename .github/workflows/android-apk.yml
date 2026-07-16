@@ -33,10 +33,10 @@ jobs:
       - name: Install Android build tools
         run: |
           yes | sdkmanager --licenses
-          sdkmanager "platform-tools" "platforms;android-34" "platforms;android-33" "build-tools;34.0.0" "build-tools;33.0.2"
+          sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
           echo "$ANDROID_SDK_ROOT/platform-tools" >> $GITHUB_PATH
           echo "$ANDROID_SDK_ROOT/build-tools/34.0.0" >> $GITHUB_PATH
-          echo "$ANDROID_SDK_ROOT/build-tools/33.0.2" >> $GITHUB_PATH
+          echo "ANDROIDSDK=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
 
       - name: Install system dependencies
         run: |
@@ -52,10 +52,6 @@ jobs:
           python -c "import buildozer; print(buildozer.__file__)"
 
       - name: Build debug APK
-        env:
-          ANDROID_HOME: ${{ env.ANDROID_SDK_ROOT }}
-          ANDROIDSDK: ${{ env.ANDROID_SDK_ROOT }}
-          ANDROID_SDK: ${{ env.ANDROID_SDK_ROOT }}
         run: |
           python - <<'PY'
           import os
@@ -66,6 +62,27 @@ jobs:
           os.chdir("mobile_app")
           if not os.path.exists("buildozer.spec"):
             raise FileNotFoundError("buildozer.spec not found in mobile_app")
+
+          sdk_root = os.environ["ANDROID_SDK_ROOT"]
+          os.environ.update(
+              ANDROID_HOME=sdk_root,
+              ANDROIDSDK=sdk_root,
+              ANDROID_SDK=sdk_root,
+          )
+          build_tools_dir = os.path.join(sdk_root, "build-tools", "34.0.0")
+          aidl_file = os.path.join(build_tools_dir, "aidl")
+          if not os.path.isfile(aidl_file) or not os.access(aidl_file, os.X_OK):
+            raise FileNotFoundError(f"AIDL was not installed at {aidl_file}")
+          os.environ["PATH"] = f"{build_tools_dir}{os.pathsep}{os.environ['PATH']}"
+
+          with open("buildozer.spec", encoding="utf-8") as spec_file:
+            spec_text = spec_file.read()
+          spec_text = spec_text.replace(
+              "android.api = 34\n",
+              f"android.api = 34\nandroid.sdk_path = {sdk_root}\n",
+          )
+          with open("buildozer.spec", "w", encoding="utf-8") as spec_file:
+            spec_file.write(spec_text)
 
           buildozer_exe = shutil.which("buildozer")
           if not buildozer_exe:
@@ -83,6 +100,7 @@ jobs:
           print(f"AIDL path: {aidl_path}")
           if not aidl_path:
             raise RuntimeError("aidl not found in PATH after Android SDK setup")
+          subprocess.check_call([aidl_path, "--version"])
           subprocess.check_call([buildozer_exe, "android", "debug"])
           PY
 
